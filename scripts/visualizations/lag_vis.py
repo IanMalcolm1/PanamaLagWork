@@ -13,7 +13,7 @@ stations_rel_df = pd.read_csv(stations_rel_path)
 
 # Hydro data
 precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_hourly.csv'
-stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly_normalized.csv'
+stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly_norm.csv'
 
 date_cols_precip = ['Start of Interval (UTC)', 'End of Interval (UTC)']
 date_cols_stage = ['Start of Interval (UTC)', 'Time']

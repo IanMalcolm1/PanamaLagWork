@@ -1,16 +1,13 @@
 import pandas as pd
 import scipy.signal as sig
-import matplotlib.pyplot as plt
 import numpy as np
-import matplotlib.dates as mdates
 
 
 def main():
-    #run associate_peaks for rainy season of each year
-    #define rainy season as June to November to (which should be well within the range)
-    #concat resulting dfs
-    
-    # Prep data
+    """
+    Runs associate_peaks for rainy season of each year, and concatenate results.
+    """    
+    # Data prep
     precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_hourly.csv'
     stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly_normalized.csv'
 
@@ -45,8 +42,11 @@ def main():
         'CNT': {'prominence': 0.03, 'distance': 2},
         'PEL': {'prominence': 0.3, 'distance': 2},
         'CDL': {'prominence': 0.2, 'distance': 2},
+        'GRM': {'prominence': 0.2, 'distance': 2},
+        'CHI': {'prominence': 0.2, 'distance': 2},
     }
 
+    # Run calculations
     peak_dfs = []
     for station_id_pair in station_id_pairs:
         stage_station_id = station_id_pair[0]
@@ -66,12 +66,13 @@ def main():
 
         peak_dfs.append(peaks_df)
     
+    # Concatenate all results into a single DataFrame
     full_df = pd.concat(peak_dfs, ignore_index=True)
     full_df.dropna(subset=['PrecipTime'], inplace=True)
-        
+
+    # Save 
     outpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\norm_lag.csv'
     full_df.to_csv(outpath, index=False)
-    pass
 
 
 def associate_peaks_full(stage_df: pd.DataFrame, precip_df: pd.DataFrame,

@@ -4,11 +4,15 @@ import pandas as pd
 
 def main():
     profiles_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\elevation_profiles'
+    outname = "river_slopes.csv"
+    outpath = rf'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\elevation_profiles\{outname}'
+
     for _,_,filenames in os.walk(profiles_path):
         break
 
+    slopes = []
     for filename in filenames:
-        if filename.endswith('.csv'):
+        if filename.endswith('.csv') and filename != outname:
             filepath = os.path.join(profiles_path, filename)
             df = pd.read_csv(filepath)
 
@@ -23,7 +27,20 @@ def main():
             min_elev = df.at[min_idx, 'Elevation']
             max_elev = df.at[max_idx, 'Elevation']
 
-            print(f'Average percent slope for {filename} is {((max_elev - min_elev) / (max_dist - min_dist))*100}')
+            slope_percent = abs(((max_elev - min_elev) / (max_dist - min_dist))*100)
+
+            slopes.append({
+                'station_id': filename,
+                'slope_percent': slope_percent,
+                'min_elev': min(min_elev, max_elev),
+                'max_elev': max(min_elev, max_elev),
+                'distance': max_dist
+            })
+
+    slopes_df = pd.DataFrame(slopes)
+    slopes_df.to_csv(outpath, index=False)
+    print(f"Saved slopes to {outpath}")
+    
 
 
 if __name__ == '__main__':

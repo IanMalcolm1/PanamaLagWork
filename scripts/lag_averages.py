@@ -1,3 +1,7 @@
+"""
+Functions for making tables of average lag time over different time periods.
+"""
+
 import pandas as pd
 import numpy as np
 
@@ -7,7 +11,7 @@ def main():
     lag_df = pd.read_csv(lagpath, parse_dates=['StageTime', 'PrecipTime'])
     full_averages = average_lag_table(lag_df)
     yearly_means = average_lag_table_yearly(lag_df)
-    #monthly_means = average_lag_table_monthly(lag_df)
+    monthly_means = average_lag_table_monthly(lag_df)
 
     print(full_averages)
     print(yearly_means)
@@ -15,6 +19,9 @@ def main():
 
 
 def average_lag_table(peaks_df):
+    """
+    Calculate the average lag time for each station for all years.
+    """
     lag_df = peaks_df.copy()
     lag_df['Lag'] = lag_df['StageTime'] - lag_df['PrecipTime']
     lag_df['Lag'] = lag_df['Lag'] / np.timedelta64(1, 'h')  # convert to hours
@@ -26,6 +33,9 @@ def average_lag_table(peaks_df):
     return yearly_means
 
 def average_lag_table_yearly(peaks_df):
+    """
+    Calculate the average lag time for each station for each year.
+    """
     lag_df = peaks_df.copy()
     lag_df['Lag'] = lag_df['StageTime'] - lag_df['PrecipTime']
     lag_df['Lag'] = lag_df['Lag'] / np.timedelta64(1, 'h')  # convert to hours
@@ -37,6 +47,9 @@ def average_lag_table_yearly(peaks_df):
     return yearly_means
     
 def average_lag_table_monthly(peaks_df):
+    """
+    Calculate the average lag time for each station for each month.
+    """
     lag_df = peaks_df.copy()
     lag_df['Lag'] = lag_df['StageTime'] - lag_df['PrecipTime']
     lag_df['Lag'] = lag_df['Lag'] / np.timedelta64(1, 'h')  # convert to hours
