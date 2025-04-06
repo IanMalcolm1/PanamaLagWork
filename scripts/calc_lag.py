@@ -1,6 +1,7 @@
 import pandas as pd
 import scipy.signal as sig
 import numpy as np
+import hydro_utils
 
 
 def main():
@@ -9,41 +10,37 @@ def main():
     """    
     # Data prep
     precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_hourly.csv'
-    stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly_normalized.csv'
+    stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly_norm.csv'
 
-    date_cols_precip = ['Start of Interval (UTC)', 'End of Interval (UTC)']
-    date_cols_stage = ['Start of Interval (UTC)', 'Time']
-
-    precip_df = pd.read_csv(precip_path, parse_dates=date_cols_precip)
-    stage_df = pd.read_csv(stage_path, parse_dates=date_cols_stage)
-
-    rename_cols = {
-        'End of Interval (UTC)': 'Time',
-    }
-
-    precip_df.rename(columns=rename_cols, inplace=True)
-    stage_df.rename(columns=rename_cols, inplace=True)
+    precip_df = hydro_utils.read_precip_data(precip_path)
+    stage_df = hydro_utils.read_stage_data_norm(stage_path)
 
     #station data (currently not used)
     stations_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\station_data\station_data.csv'
     station_df = pd.read_csv(stations_path)
 
-    # List of station ID pairs
+    # List of station ID pairs (index 0 is river stationg, 1 is precip station)
     station_id_pairs = [
         ['CNT', 'CNT'],
         ['PEL', 'PEL'],
         ['CDL', 'CDL'],
         ['GRM', 'ARC'],
-        ['CHI', 'RPD']
+        ['CHI', 'CHI'],
+        ['CQA', 'CQA'],
+        ['CHR', 'CHR'],
+        ['CAN', 'CAN'],
     ]
 
     # Specific arguments for each station
     stage_peaks_args_map = {
-        'CNT': {'prominence': 0.03, 'distance': 2},
-        'PEL': {'prominence': 0.3, 'distance': 2},
+        'CNT': {'prominence': 0.2, 'distance': 2},
+        'PEL': {'prominence': 0.2, 'distance': 2},
         'CDL': {'prominence': 0.2, 'distance': 2},
         'GRM': {'prominence': 0.2, 'distance': 2},
         'CHI': {'prominence': 0.2, 'distance': 2},
+        'CQA': {'prominence': 0.2, 'distance': 2},
+        'CHR': {'prominence': 0.2, 'distance': 2},
+        'CAN': {'prominence': 0.2, 'distance': 2},
     }
 
     # Run calculations
@@ -218,22 +215,26 @@ def associate_peaks(stage_df: pd.DataFrame, precip_df: pd.DataFrame,
         stage_time = row.StageTime
         min_time = stage_time - pd.Timedelta(hours=max_distance) #farthest back to search for a peak
         
+        # Filter precipitation data to only include values in the time range, and only peaks
         precip_slice = clip_precip_df[(clip_precip_df['Time'] >= min_time) & (clip_precip_df['Time'] <= stage_time)]
+        precip_peak_idxs, _ = sig.find_peaks(precip_slice['Value'])
+        precip_slice = precip_slice.iloc[precip_peak_idxs]
         precip_peak_time = None
 
         while not precip_slice.empty and precip_peak_time is None:
             #identify time of largest precip peak in range
             max_idx = precip_slice['Value'].idxmax()
+            max_val = precip_slice.at[max_idx, 'Value']
             precip_peak_time = precip_slice.at[max_idx, 'Time']
 
             # If the precip peak is under some threshold, assume it is invalid and set it to None
-            if precip_slice.at[max_idx, 'Value'] < min_precip:
+            if max_val < min_precip:
                 precip_peak_time = None
                 break #return early because no other values will be larger
 
             # Try again if current max already claimed by a previous stage peak
-            # Only search after previous max
             if precip_peak_time in precip_peak_times:
+                # Only search after the claimed precip peak
                 precip_slice = precip_slice[precip_slice['Time'] > precip_peak_time]
                 precip_peak_time = None #essentially continue loop
     
@@ -264,7 +265,6 @@ def associate_peaks(stage_df: pd.DataFrame, precip_df: pd.DataFrame,
     full_peaks_df.rename(columns=rename_cols, inplace=True)
     
     return full_peaks_df
-
 
 
 if __name__ == '__main__':

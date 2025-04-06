@@ -1,17 +1,15 @@
 from matplotlib import pyplot as plt
 import context
 import hydro_utils
-import norm_stage
 
 
-PLOT_NORM = True
+PLOT_NORM = False
 
 
 def main():
     # Data paths
     norm_stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly_norm.csv'
     og_stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly.csv'
-    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_hourly.csv'
 
     # Read data
     if PLOT_NORM:

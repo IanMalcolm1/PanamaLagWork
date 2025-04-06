@@ -5,6 +5,14 @@ This script helps clean up data taken from the Panama Canal Authority's data web
 import pandas as pd
 import os
 
+
+def main():
+    indir = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\StationData\precip_raw'
+    outpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\StationData\precip_hourly_melt.csv'
+
+    prep_and_merge(indir, outpath)
+
+
 def fix_cols(base_path):
     stage_cols_df = pd.read_csv(base_path, header=1, nrows=10) #just get column rows (10 rows is more than enough)
 
@@ -69,10 +77,7 @@ def prep_and_merge(indir, outpath):
 
 
 if __name__=='__main__':
-    indir = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\StationData\precip_raw'
-    outpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\StationData\precip_hourly_melt.csv'
-
-    prep_and_merge(indir, outpath)
+    main()
 
     
 
