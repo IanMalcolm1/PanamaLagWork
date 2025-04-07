@@ -26,9 +26,9 @@ def main():
         ['CDL', 'CDL'],
         ['GRM', 'ARC'],
         ['CHI', 'CHI'],
-        ['CQA', 'CQA'],
+        ['CQA', 'ZAN'],
         ['CHR', 'CHR'],
-        ['CAN', 'CAN'],
+        ['CAN', 'GAD'],
     ]
 
     # Specific arguments for each station

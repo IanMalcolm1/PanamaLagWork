@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import signal as sig
@@ -16,8 +17,8 @@ def main():
     lag_df = hydro_utils.read_lag_data(lagpath)
 
     # Filter data
-    stage_station = 'CNT'
-    precip_station = 'CNT'
+    stage_station = 'CAN'
+    precip_station = 'GAD'
     start_date = stage_df['Time'].min()
     end_date = "2028-01-01"
 

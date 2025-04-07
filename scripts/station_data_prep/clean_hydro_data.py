@@ -7,8 +7,8 @@ import os
 
 
 def main():
-    indir = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\StationData\precip_raw'
-    outpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\StationData\precip_hourly_melt.csv'
+    indir = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_raw\hourly'
+    outpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_hourly_2.csv'
 
     prep_and_merge(indir, outpath)
 

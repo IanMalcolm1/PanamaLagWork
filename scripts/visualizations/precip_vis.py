@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 def main():
     precip_df, stage_df = get_data()
 
-    stations = ['CNT', 'PEL', 'CDL']
+    stations = ['CHI', 'ZAN', 'GAD']
 
     fig, ax = plt.subplots(figsize=(14, 8))
     for station_id in stations:
