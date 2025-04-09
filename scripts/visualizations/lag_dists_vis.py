@@ -33,6 +33,27 @@ def plot_lag_dist(peaks_df, station_id):
     plt.show()
 
 
+def plot_precip_vs_lag(peaks_df, station_id):
+    """
+    Precip vs lag. Not very compelling.
+
+    Args:
+        lag_df (pd.DataFrame): DataFrame containing lag data.
+        station_id (str): Station ID to be used in the plot title.
+    """
+    
+    lag_df = peaks_df[peaks_df['StageStation']==station_id].copy()
+    lag_df['Lag'] = lag_df['StageTime'] - lag_df['PrecipTime']
+    lag_df['Lag'] = lag_df['Lag'] / np.timedelta64(1, 'h') #convert to hours
+
+    fig, ax = plt.subplots(figsize=(14, 8))
+    ax.plot(lag_df['PrecipValue'], lag_df['Lag'], '.r')
+    ax.set_xlabel('Precipitation (mm)')
+    ax.set_ylabel('Lag Time (hours)')
+    ax.set_title(f'Lag Time Distribution at {station_id}')
+    plt.show()
+
+
 
 if __name__ == '__main__':
     main()

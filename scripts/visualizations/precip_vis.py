@@ -5,6 +5,8 @@ def main():
     precip_df, stage_df = get_data()
 
     stations = ['CHI', 'ZAN', 'GAD']
+    stations = ['CNT', 'PEL', 'CDL', 'ARC', 'CHI', 'ZAN', 'CHR', 'GAD']
+
 
     fig, ax = plt.subplots(figsize=(14, 8))
     for station_id in stations:
@@ -15,11 +17,13 @@ def main():
     plt.show()
 
     for station_id in stations:
-        yearly_slice = precip_df[(precip_df['Time'].dt.year > 2019) & (precip_df['Station Code'] == station_id)]
+        yearly_slice = precip_df[(precip_df['Station Code'] == station_id)]
         print(f"Avg precip for {station_id}: {yearly_slice['Value'].mean()}\nStd: {yearly_slice['Value'].std()}\n")
 
         stage_yearly_slice = stage_df[(stage_df['Time'].dt.year > 2019) & (stage_df['Station Code'] == station_id)]
         print(f"Avg stage for {station_id}: {stage_yearly_slice['Value'].mean()}\nStd: {stage_yearly_slice['Value'].std()}\n")
+
+        print(f"Time range for {station_id}: {yearly_slice['Time'].min()} to {yearly_slice['Time'].max()}\n")
 
 
 def get_data(

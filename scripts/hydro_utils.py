@@ -78,7 +78,7 @@ def read_precip_data(precip_path):
     return precip_df
 
 
-def read_lag_data(lag_path):
+def read_peaks_data(lag_path):
     """Wrapper around read_longitudinal_data()."""
     lag_df = read_longitudinal_data(
         lag_path,
