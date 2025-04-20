@@ -18,20 +18,39 @@ def main():
     plt.rcParams['font.family'] = FONT_FAMILY
     
     # Hydro data
-    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_hourly.csv'
-    stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly_norm.csv'
+    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_par.csv'
+    stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par_norm.csv'
     lagpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\norm_lag.csv'
 
     precip_df = hydro_utils.read_precip_data(precip_path)
     stage_df = hydro_utils.read_stage_data_norm(stage_path)
     lag_df = hydro_utils.read_peaks_data(lagpath)
 
-    # Filter data
-    stage_station = 'CNT'
-    precip_station = 'CNT'
-    start_date = stage_df['Time'].min()
-    end_date = "2028-01-01"
+    # List of station ID pairs (index 0 is river station, 1 is precip station)
+    station_id_pairs = [
+        ['CNT', 'CNT'],
+        ['PEL', 'PEL'],
+        ['CDL', 'CDL'],
+        ['GRM', 'ARC'],
+        ['CHI', 'CHI'],
+        ['CQA', 'ZAN'],
+        ['CHR', 'CHR'],
+        ['CAN', 'GAD'],
+    ]
 
+    for station_id_pair in station_id_pairs:
+        stage_station = station_id_pair[0]
+        precip_station = station_id_pair[1]
+
+        start_date = stage_df['Time'].min()
+        end_date = "2028-01-01"
+
+        plot_lag_vis(lag_df, stage_df, precip_df, stage_station, precip_station, start_date, end_date)
+
+
+
+
+def plot_lag_vis(lag_df, stage_df, precip_df, stage_station, precip_station, start_date, end_date):
     precip_mask = hydro_utils.range_mask(precip_df, precip_station, start_date, end_date)
     stage_mask = hydro_utils.range_mask(stage_df, stage_station, start_date, end_date)
     lag_mask = hydro_utils.range_mask(
@@ -43,10 +62,10 @@ def main():
     clip_stage_df = stage_df[stage_mask]
     lag_df = lag_df[lag_mask]
 
-    plot_lag_vis(clip_precip_df, clip_stage_df, lag_df, stage_station, plot_maxes=False)
+    plot_lag_vis_inner(clip_precip_df, clip_stage_df, lag_df, stage_station, plot_maxes=False)
 
 
-def plot_lag_vis(clip_precip_df, clip_stage_df, lag_df, station_id,
+def plot_lag_vis_inner(clip_precip_df, clip_stage_df, lag_df, station_id,
                  plot_maxes=True, peaks_args={'prominence':0.02, 'distance':2}):
     """
     Plot the lag between precipitation and stage data.

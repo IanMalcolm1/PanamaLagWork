@@ -3,13 +3,13 @@ import context
 import hydro_utils
 
 
-PLOT_NORM = False
+PLOT_NORM = True
 
 
 def main():
     # Data paths
-    norm_stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly_norm.csv'
-    og_stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly.csv'
+    norm_stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par_norm.csv'
+    og_stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par.csv'
 
     # Read data
     if PLOT_NORM:

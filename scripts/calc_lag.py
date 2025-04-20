@@ -8,18 +8,16 @@ def main():
     """
     Runs associate_peaks for rainy season of each year, and concatenate results.
     """    
-    # Data prep
-    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_hourly.csv'
-    stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly_norm.csv'
+    # Data paths
+    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_par.csv'
+    stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par_norm.csv'
+    out_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\norm_lag.csv'
 
+    # Input data
     precip_df = hydro_utils.read_precip_data(precip_path)
     stage_df = hydro_utils.read_stage_data_norm(stage_path)
 
-    #station data (currently not used)
-    stations_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\station_data\station_data.csv'
-    station_df = pd.read_csv(stations_path)
-
-    # List of station ID pairs (index 0 is river stationg, 1 is precip station)
+    # List of station ID pairs (index 0 is river station, 1 is precip station)
     station_id_pairs = [
         ['CNT', 'CNT'],
         ['PEL', 'PEL'],
@@ -33,14 +31,14 @@ def main():
 
     # Specific arguments for each station
     stage_peaks_args_map = {
-        'CNT': {'prominence': 0.2, 'distance': 2},
-        'PEL': {'prominence': 0.2, 'distance': 2},
-        'CDL': {'prominence': 0.2, 'distance': 2},
-        'GRM': {'prominence': 0.2, 'distance': 2},
-        'CHI': {'prominence': 0.2, 'distance': 2},
-        'CQA': {'prominence': 0.2, 'distance': 2},
-        'CHR': {'prominence': 0.2, 'distance': 2},
-        'CAN': {'prominence': 0.2, 'distance': 2},
+        'CNT': {'prominence': 0.75, 'distance': 2},
+        'PEL': {'prominence': 0.75, 'distance': 2},
+        'CDL': {'prominence': 0.75, 'distance': 2},
+        'GRM': {'prominence': 0.75, 'distance': 2},
+        'CHI': {'prominence': 0.75, 'distance': 2},
+        'CQA': {'prominence': 0.75, 'distance': 2},
+        'CHR': {'prominence': 0.75, 'distance': 2},
+        'CAN': {'prominence': 0.75, 'distance': 2},
     }
 
     # Run calculations
@@ -68,8 +66,7 @@ def main():
     full_df.dropna(subset=['PrecipTime'], inplace=True)
 
     # Save 
-    outpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\norm_lag.csv'
-    full_df.to_csv(outpath, index=False)
+    full_df.to_csv(out_path, index=False)
 
 
 def associate_peaks_full(stage_df: pd.DataFrame, precip_df: pd.DataFrame,
@@ -129,7 +126,8 @@ def associate_peaks_full(stage_df: pd.DataFrame, precip_df: pd.DataFrame,
             precip_station=precip_station,
             time_span=time_span,
             stage_peaks_args=stage_peaks_args,
-            max_distance=max_distance
+            max_distance=max_distance,
+            min_precip=min_precip
         )
 
         peaks_dfs.append(peak_df)

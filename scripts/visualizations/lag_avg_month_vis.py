@@ -20,10 +20,10 @@ stations = lag_df['StageStation'].unique().tolist()
 stations
 
 
-fig, ax = plt.subplots(figsize=(14, 8))
 for station_id in stations:
+    fig, ax = plt.subplots(figsize=(14, 8))
     yearly_means_slice = yearly_means[yearly_means['StageStation'] == station_id]
     ax.plot(yearly_means_slice['date'], yearly_means_slice['Lag'], '-', label=station_id)
 
-ax.legend()
-plt.show()
+    ax.legend()
+    plt.show()

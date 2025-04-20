@@ -4,8 +4,8 @@ import hydro_utils
 
 def main():
     # Data paths
-    og_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly.csv'
-    out_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_hourly_norm.csv'
+    og_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par.csv'
+    out_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par_norm.csv'
 
     stage_df = hydro_utils.read_stage_data_og(og_path)
 
@@ -39,17 +39,22 @@ def normalize_rivers(stage_df: pd.DataFrame):
 _outlier_mask_data = [
     ['CNT', '2017-09-23 15:00:00', '2018-02-15'],
     ['CNT', '2018-08-18', '2018-08-23'],
-    ['CHR', '2018-09-10 18:00:00', '2018-09-12'],
-    ['CHR', '2018-11-17', '2018-12-05'],
+    ['CHR', '2017-07-05 23:00:00', '2019-01-19'], #has a long string of weird spikes and some huge outliers
+    #['CHR', '2018-09-10 18:00:00', '2018-09-12'],
+    #['CHR', '2018-11-17', '2018-12-05'],
     ['CDL', '2015-11-24', '2015-12-03'],
+    ['GRM', '2017-09-29 16:00:00', '2017-09-29 17:00:00'],
     ['GRM', '2017-11-05 06:00:00', '2017-11-07'],
     ['GRM', '2017-11-25 22:00:00', '2017-11-26 02:00:00'],
     ['GRM', '2018-01-27 12:00:00', '2018-01-27 16:00:00'],
     ['GRM', '2018-08-22', '2018-08-24 15:00:00'],
     ['GRM', '2018-08-27 12:00:00', '2018-08-28'],
-    ['GRM', '2018-11-21 03:00:00', '2018-11-21 12:00:00'],
-    ['GRM', '2018-11-26', '2018-11-26 12:00:00'],
-    ['GRM', '2018-11-28 20:00:00', '2018-11-29 04:00:00'],
+    ['GRM', '2018-09-30 16:00:00', '2018-09-30 18:00:00'],
+    ['GRM', '2018-10-18 21:47:00', '2018-10-18 21:48:20'],
+    ['GRM', '2018-11-19', '2018-11-29 08:00:00'],
+    #['GRM', '2018-11-21 03:00:00', '2018-11-21 12:00:00'],
+    #['GRM', '2018-11-26', '2018-11-26 12:00:00'],
+    #['GRM', '2018-11-28 20:00:00', '2018-11-29 04:00:00'],
     ['GRM', '2019-01-22', '2019-03-22'],
     ['GRM', '2019-06-12 06:00:00', '2019-06-12 20:00:00'],
 ]

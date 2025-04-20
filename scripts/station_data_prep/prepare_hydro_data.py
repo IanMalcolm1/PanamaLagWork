@@ -7,18 +7,26 @@ import os
 
 
 def main():
-    indir = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_raw\hourly'
-    outpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_hourly_2.csv'
+    indir = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_raw\points_as_recorded'
+    outpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_par.csv'
 
-    prep_and_merge(indir, outpath)
+    prep_and_merge(indir, outpath, num_time_cols=1)
 
 
-def fix_cols(base_path):
+def fix_cols(base_path, num_time_cols=2):
+    """
+    Fixes the columns of the csv file to be more readable.
+
+    Args:
+        base_path: (str): The path to the csv file to be fixed
+        num_time_cols: (int): The number of time columns in the csv file. Normally 2 columns unless
+            downloaded using points-as-recorded setting.
+    """
     stage_cols_df = pd.read_csv(base_path, header=1, nrows=10) #just get column rows (10 rows is more than enough)
 
     station_ids = list(stage_cols_df.columns) #this should be 2 'Unnamed: n' columns, then the station ids
     data_types = list(stage_cols_df.iloc[1]) #this should be 2 NaNs and then sensor names
-    data_units = list(stage_cols_df.iloc[2]) #this should be 2 'Start/End of Interval' cols and then data type/units
+    data_units = list(stage_cols_df.iloc[2]) #this should be 1-2 'Start/End of Interval' cols and then data type/units
 
     new_cols = []
     for i in range(len(station_ids)):
@@ -30,7 +38,7 @@ def fix_cols(base_path):
     base_df = pd.read_csv(base_path, header=4)
     base_df.columns = new_cols
 
-    melt_df = base_df.melt(id_vars=new_cols[:2], value_name='Value')
+    melt_df = base_df.melt(id_vars=new_cols[:num_time_cols], value_name='Value')
 
     melt_df = melt_df.dropna(subset=['Value'])
 
@@ -44,14 +52,14 @@ def fix_cols(base_path):
     return melt_df
 
 
-def prep_singular(inpath, outpath):
+def prep_singular(inpath, outpath, num_time_cols):
     """Preps and saves a single file"""
-    melt_df = fix_cols(inpath)
+    melt_df = fix_cols(inpath, num_time_cols=num_time_cols)
 
     melt_df.to_csv(outpath, index=False)
 
 
-def prep_and_merge(indir, outpath):
+def prep_and_merge(indir, outpath, num_time_cols):
     """
     Preps and combines all csv files in a directory into a single file. This is useful when the PCA website
     can't handle a full data export, and you have to split the data into a series of smaller time periods.
@@ -68,7 +76,7 @@ def prep_and_merge(indir, outpath):
     for file in files:
         if file.endswith('.csv'):
             csv_path = os.path.join(indir, file)
-            melt_dfs.append (fix_cols(csv_path))
+            melt_dfs.append (fix_cols(csv_path, num_time_cols=num_time_cols))
 
     concat_df = pd.concat(melt_dfs)
 

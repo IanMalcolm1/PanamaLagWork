@@ -23,6 +23,24 @@ def range_mask(
     return (df[station_col] == station_code) & (df[time_col] >= start_date) & (df[time_col] <= end_date)
 
 
+def read_panama_data(precip_path, single_time_col=True):
+    """Wrapper around read_longitudinal_data()."""
+    if single_time_col:
+        return read_longitudinal_data(
+            precip_path,
+            date_cols = ['Timestamp (UTC)'],
+            drop_cols = None,
+            rename_cols = {'Timestamp (UTC)': 'Time'}
+        )
+    
+    else:
+        return read_longitudinal_data(
+            precip_path,
+            date_cols = ['Start of Interval (UTC)', 'End of Interval (UTC)'],
+            drop_cols = ['Start of Interval (UTC)'],
+            rename_cols = {'End of Interval (UTC)': 'Time'}
+        )
+
 def read_longitudinal_data(
     table_path: str,
     date_cols: list[str],
@@ -42,16 +60,8 @@ def read_longitudinal_data(
     return df
 
 
-def read_stage_data_og(stage_path):
-    """Wrapper around read_longitudinal_data()."""
-    stage_df = read_longitudinal_data(
-        stage_path,
-        date_cols = ['Start of Interval (UTC)', 'End of Interval (UTC)'],
-        drop_cols = ['Start of Interval (UTC)'],
-        rename_cols = {'End of Interval (UTC)': 'Time'}
-    )
-
-    return stage_df
+def read_stage_data_og(stage_path, single_time_col=True):
+    return read_panama_data(stage_path, single_time_col)
 
 
 def read_stage_data_norm(stage_path):
@@ -66,16 +76,9 @@ def read_stage_data_norm(stage_path):
     return stage_df
 
 
-def read_precip_data(precip_path):
+def read_precip_data(precip_path, single_time_col=True):
     """Wrapper around read_longitudinal_data()."""
-    precip_df = read_longitudinal_data(
-        precip_path,
-        date_cols = ['Start of Interval (UTC)', 'End of Interval (UTC)'],
-        drop_cols = ['Start of Interval (UTC)'],
-        rename_cols = {'End of Interval (UTC)': 'Time'}
-    )
-
-    return precip_df
+    return read_panama_data(precip_path, single_time_col)
 
 
 def read_peaks_data(lag_path):
