@@ -4,21 +4,21 @@ import context
 import hydro_utils as hutils
 
 def main():
-    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_par.csv'
+    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_15min.csv'
     stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par.csv'
 
-    precip_df = hutils.read_precip_data(precip_path)
+    precip_df = hutils.read_precip_data(precip_path, single_time_col=False)
     stage_df = hutils.read_stage_data_og(stage_path)
 
     stations = ['CHI', 'ZAN', 'GAD']
     stations = ['CNT', 'PEL', 'CDL', 'ARC', 'CHI', 'ZAN', 'CHR', 'GAD']
-    stations = ['CNT']
+    stations = ['CAN']
 
 
     fig, ax = plt.subplots(figsize=(14, 8))
     for station_id in stations:
         yearly_slice = precip_df[(precip_df['Time'].dt.year == 2020) & (precip_df['Station Code'] == station_id)]
-        ax.bar(yearly_slice['Time'], yearly_slice['Value'], label=station_id)
+        ax.plot(yearly_slice['Time'], yearly_slice['Value'], label=station_id)
 
 
     ax.legend()

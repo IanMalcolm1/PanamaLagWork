@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 import context
 import pandas as pd
-import lag_averages as lavg
+import scripts.lag_stats as lavg
 import hydro_utils as hutils
 
 tableau_colors = ['#4e79a7', '#f28e2c', '#e15759', '#76b7b2', '#59a14f',
@@ -23,7 +23,7 @@ color_map = {stations[i]: color_pallette[i] for i in range(len(stations))}
 
 
 def main():
-    peaks_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\norm_lag.csv'
+    peaks_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\lag_15min.csv'
     peaks_df = hutils.read_peaks_data(peaks_path)
     lag_df = lavg.make_lag_df(peaks_df)
 

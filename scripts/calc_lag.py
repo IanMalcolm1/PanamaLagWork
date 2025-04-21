@@ -9,12 +9,12 @@ def main():
     Runs associate_peaks for rainy season of each year, and concatenate results.
     """    
     # Data paths
-    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_par.csv'
+    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_15min.csv'
     stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par_norm.csv'
-    out_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\norm_lag.csv'
+    out_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\lag_15min.csv'
 
     # Input data
-    precip_df = hydro_utils.read_precip_data(precip_path)
+    precip_df = hydro_utils.read_precip_data(precip_path, single_time_col=False)
     stage_df = hydro_utils.read_stage_data_norm(stage_path)
 
     # List of station ID pairs (index 0 is river station, 1 is precip station)
@@ -26,7 +26,7 @@ def main():
         ['CHI', 'CHI'],
         ['CQA', 'ZAN'],
         ['CHR', 'CHR'],
-        ['CAN', 'GAD'],
+        ['CAN', 'CAN'],
     ]
 
     # Specific arguments for each station

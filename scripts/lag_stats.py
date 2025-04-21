@@ -8,7 +8,9 @@ import hydro_utils as hutils
 
 
 def main():
-    lagpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\norm_lag.csv'
+    lagpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\lag_15min.csv'
+    full_stats_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\lag_stats_full.csv'
+    
     peaks_df = hutils.read_peaks_data(lagpath)
     lag_df = make_lag_df(peaks_df)
 
@@ -18,8 +20,6 @@ def main():
     print(yearly_means)
     monthly_means = lag_stats_monthly(lag_df)
 
-
-    full_stats_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\lag_stats_full.csv'
     stats_full.to_csv(full_stats_path, index=False)
 
 

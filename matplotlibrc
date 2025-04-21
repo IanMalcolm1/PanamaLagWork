@@ -1,0 +1,10 @@
+font.family: Bahnschrift
+axes.unicode_minus: False
+
+axes.titlesize: 18
+axes.labelsize: 16
+
+xtick.labelsize: 14
+ytick.labelsize: 14
+
+legend.fontsize: 12

@@ -7,10 +7,10 @@ import os
 
 
 def main():
-    indir = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_raw\points_as_recorded'
-    outpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_par.csv'
+    indir = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_raw\15min'
+    outpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_15min.csv'
 
-    prep_and_merge(indir, outpath, num_time_cols=1)
+    prep_and_merge(indir, outpath, num_time_cols=2)
 
 
 def fix_cols(base_path, num_time_cols=2):
@@ -79,6 +79,8 @@ def prep_and_merge(indir, outpath, num_time_cols):
             melt_dfs.append (fix_cols(csv_path, num_time_cols=num_time_cols))
 
     concat_df = pd.concat(melt_dfs)
+
+    concat_df = concat_df.sort_values(by=['Station Code', 'Time'])
 
     concat_df.to_csv(outpath, index=False)
 
