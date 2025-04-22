@@ -5,6 +5,7 @@ Functions for making tables of average lag time over different time periods.
 import pandas as pd
 import numpy as np
 import hydro_utils as hutils
+from station_id_pairs import STATION_ID_PAIRS_REVERSE
 
 
 def main():
@@ -14,6 +15,8 @@ def main():
     precip_df = hutils.read_precip_data(precip_path, single_time_col=False)
     
     precip_sum_full_df = precip_sum_full(precip_df)
+    precip_sum_full_df['Station Code'] = precip_sum_full_df['Station Code'].map(STATION_ID_PAIRS_REVERSE)
+    precip_sum_full_df.to_csv(stats_path, index=False)
     print(precip_sum_full_df)
 
     precip_sum_yearly_df = precip_sum_yearly(precip_df)

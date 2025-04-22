@@ -39,7 +39,7 @@ def make_lag_df(peaks_df):
     return lag_df
 
 
-def lag_stats_full(lag_df):
+def lag_stats_full(lag_df: pd.DataFrame):
     """
     Calculate the average lag time for each station for all years.
     """

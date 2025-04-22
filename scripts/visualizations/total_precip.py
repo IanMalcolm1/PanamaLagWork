@@ -1,0 +1,33 @@
+import context
+import lag_stats, precip_sums, hydro_utils as hutils
+import matplotlib.pyplot as plt
+from colors import LAG_COLOR_MAP
+from station_id_pairs import STATION_ID_PAIRS_REVERSE
+
+precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_15min.csv'
+
+precip_df = hutils.read_precip_data(precip_path, single_time_col=False)
+
+precip_sums_df = precip_sums.precip_sum_full(precip_df).sort_values(by=['PrecipSum'], ascending=False)
+
+stations = precip_sums_df['Station Code'].unique().tolist()
+
+fig, ax = plt.subplots(figsize=(14, 8))
+ax.bar(precip_sums_df['Station Code'], precip_sums_df['PrecipSum'], label="Average Precipitation")
+
+for i in range(len(stations)):
+    station_stats = precip_sums_df[precip_sums_df['Station Code'] == stations[i]]
+    stage_station = STATION_ID_PAIRS_REVERSE[stations[i]]
+    ax.bar(
+        station_stats['Station Code'], station_stats['PrecipSum'],
+        color=LAG_COLOR_MAP[stage_station], edgecolor='black',
+        label=stage_station
+    )
+
+# Add title and axis labels
+ax.set_title('Total Precipitation by Station')
+ax.set_xlabel('Station')
+ax.set_ylabel('Total Precipitation (mm)')
+
+plt.tight_layout()
+plt.show()
