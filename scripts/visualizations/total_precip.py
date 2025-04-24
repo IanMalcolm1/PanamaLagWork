@@ -10,6 +10,8 @@ precip_df = hutils.read_precip_data(precip_path, single_time_col=False)
 
 precip_sums_df = precip_sums.precip_sum_full(precip_df).sort_values(by=['PrecipSum'], ascending=False)
 
+precip_sums_df['Station Code'] = precip_sums_df['Station Code'].map(STATION_ID_PAIRS_REVERSE)
+
 stations = precip_sums_df['Station Code'].unique().tolist()
 
 fig, ax = plt.subplots(figsize=(14, 8))
@@ -17,11 +19,10 @@ ax.bar(precip_sums_df['Station Code'], precip_sums_df['PrecipSum'], label="Avera
 
 for i in range(len(stations)):
     station_stats = precip_sums_df[precip_sums_df['Station Code'] == stations[i]]
-    stage_station = STATION_ID_PAIRS_REVERSE[stations[i]]
     ax.bar(
         station_stats['Station Code'], station_stats['PrecipSum'],
-        color=LAG_COLOR_MAP[stage_station], edgecolor='black',
-        label=stage_station
+        color=LAG_COLOR_MAP[stations[i]], edgecolor='black',
+        label=stations[i]
     )
 
 # Add title and axis labels

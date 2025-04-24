@@ -37,7 +37,9 @@ def precip_sum_yearly(precip_df):
     """
     Calculate the precipitation statistics time for each station for each year.
     """
+    precip_df = precip_df[precip_df['Time'].dt.year < 2025]
     precip_gb = precip_df.groupby([precip_df['Time'].dt.year.rename('Year'), precip_df['Station Code']])
+    print(precip_gb)
     precip_sum = precip_gb['Value'].sum().reset_index().rename(columns={'Value': 'PrecipSum'})
 
     return precip_sum
