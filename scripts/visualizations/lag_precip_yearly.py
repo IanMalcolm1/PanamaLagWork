@@ -2,7 +2,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import numpy as np
 import context
-import lag_stats, precip_sums, hydro_utils as hutils
+import lag_stats, scripts.precip_stats as precip_stats, hydro_utils as hutils
 from colors import LAG_COLOR_MAP
 import numpy as np
 from numpy.polynomial.polynomial import Polynomial
@@ -38,7 +38,7 @@ def plot_lag_avgs_yearly(lag_df):
 
 def plot_lag_avgs_vs_precip_yearly(lag_df, precip_df, station_blacklist = None, trendline_degree=1):
     lag_yearly = lag_stats.lag_stats_yearly(lag_df)
-    precip_yearly = precip_sums.precip_sum_yearly(precip_df)
+    precip_yearly = precip_stats.calc_yearly_precip(precip_df)
     
     if station_blacklist is None:
         station_blacklist = set()
