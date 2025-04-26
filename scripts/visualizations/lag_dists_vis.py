@@ -4,7 +4,7 @@ import numpy as np
 
 
 def main():
-    peaks_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\norm_lag.csv'
+    peaks_path = r'Data\hydro\lag_data\norm_lag.csv'
     peaks_df = pd.read_csv(peaks_path, parse_dates=['StageTime', 'PrecipTime'])
     
     for station_id in peaks_df['StageStation'].unique():

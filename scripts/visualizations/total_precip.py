@@ -1,10 +1,10 @@
 import context
-import lag_stats, scripts.precip_stats as precip_stats, hydro_utils as hutils
+import lag_stats, precip_stats as precip_stats, hydro_utils as hutils
 import matplotlib.pyplot as plt
 from colors import LAG_COLOR_MAP
 from station_id_pairs import STATION_ID_PAIRS_REVERSE
 
-precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_15min.csv'
+precip_path = r'Data\hydro\precip_data\precip_15min.csv'
 
 precip_df = hutils.read_precip_data(precip_path, single_time_col=False)
 

@@ -9,9 +9,9 @@ def main():
     Runs associate_peaks for rainy season of each year, and concatenate results.
     """    
     # Data paths
-    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_15min.csv'
-    stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par_norm.csv'
-    out_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\lag_15min.csv'
+    precip_path = r'Data\hydro\precip_data\precip_15min.csv'
+    stage_path = r'Data\hydro\stage_data\river_stage_par_norm.csv'
+    out_path = r'Data\hydro\lag_data\lag_15min.csv'
 
     # Input data
     precip_df = hydro_utils.read_precip_data(precip_path, single_time_col=False)

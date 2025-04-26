@@ -4,8 +4,8 @@ import context
 import hydro_utils as hutils
 
 def main():
-    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_15min.csv'
-    stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par.csv'
+    precip_path = r'Data\hydro\precip_data\precip_15min.csv'
+    stage_path = r'Data\hydro\stage_data\river_stage_par.csv'
 
     precip_df = hutils.read_precip_data(precip_path, single_time_col=False)
     stage_df = hutils.read_stage_data_og(stage_path)

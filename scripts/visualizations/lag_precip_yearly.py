@@ -2,15 +2,15 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import numpy as np
 import context
-import lag_stats, scripts.precip_stats as precip_stats, hydro_utils as hutils
+import lag_stats, precip_stats as precip_stats, hydro_utils as hutils
 from colors import LAG_COLOR_MAP
 import numpy as np
 from numpy.polynomial.polynomial import Polynomial
 
 
 def main():
-    peaks_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\lag_15min.csv'
-    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_15min.csv'
+    peaks_path = r'Data\hydro\lag_data\lag_15min.csv'
+    precip_path = r'Data\hydro\precip_data\precip_15min.csv'
 
     peaks_df = hutils.read_peaks_data(peaks_path)
     precip_df = hutils.read_precip_data(precip_path, single_time_col=False)

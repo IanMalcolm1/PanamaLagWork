@@ -4,7 +4,7 @@ import numpy as np
 
 
 def main():
-    zonal_hist_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\MiambienteLandCover\watershed_miambiente_zonal_hist.csv'
+    zonal_hist_path = r'Data\MiambienteLandCover\watershed_miambiente_zonal_hist.csv'
     zonal_hist_df = pd.read_csv(zonal_hist_path)
     
     transpose_hist_df = transpose_esri_table(zonal_hist_df)
@@ -16,14 +16,14 @@ def main():
     norm_hist_df = normalize_hist_df(merged_df, landuse_cols)
     norm_hist_df = norm_hist_df.sort_values(by='Forest', ascending=False)
 
-    #plot_landcover(norm_hist_df, landuse_cols)
+    plot_landcover(norm_hist_df, landuse_cols)
 
-    norm_hist_df.to_csv(r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\MiambienteLandCover\miambiente_landuse_merged_groups.csv', index=False)
+    norm_hist_df.to_csv(r'Data\MiambienteLandCover\miambiente_landuse_merged_groups.csv', index=False)
 
 
 
 def transpose_esri_table(df: pd.DataFrame):
-    """Transposes the ESRI table to a more usable format."""
+    """Transposes the Esri table to a more usable format."""
     out_df = df.transpose()
     out_df.reset_index(inplace=True)
     out_df.rename(lambda x: out_df[x].iloc[0], axis=1, inplace=True)

@@ -7,8 +7,8 @@ from colors import LAG_COLOR_MAP
 
 
 def main():
-    peaks_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\lag_15min.csv'
-    out_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\figures\average_lag_full1.svg'
+    peaks_path = r'Data\hydro\lag_data\lag_15min.csv'
+    out_path = r'figures\average_lag_full1.svg'
 
     peaks_df = hutils.read_peaks_data(peaks_path)
     lag_df = lavg.make_lag_df(peaks_df)

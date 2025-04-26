@@ -3,9 +3,9 @@ import pandas as pd
 
 
 def main():
-    profiles_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\elevation_profiles'
+    profiles_path = r'Data\hydro\elevation_profiles'
     outname = "river_slopes.csv"
-    outpath = rf'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\elevation_profiles\{outname}'
+    outpath = rf'Data\hydro\elevation_profiles\{outname}'
 
     for _,_,filenames in os.walk(profiles_path):
         break

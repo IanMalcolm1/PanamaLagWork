@@ -8,8 +8,8 @@ import hydro_utils as hutils
 
 
 def main():
-    lagpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\lag_15min.csv'
-    full_stats_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\lag_stats_full.csv'
+    lagpath = r'Data\hydro\lag_data\lag_15min.csv'
+    full_stats_path = r'Data\hydro\lag_data\lag_stats_full.csv'
     
     peaks_df = hutils.read_peaks_data(lagpath)
     lag_df = make_lag_df(peaks_df)

@@ -8,8 +8,8 @@ PLOT_NORM = True
 
 def main():
     # Data paths
-    norm_stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par_norm.csv'
-    og_stage_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par.csv'
+    norm_stage_path = r'Data\hydro\stage_data\river_stage_par_norm.csv'
+    og_stage_path = r'Data\hydro\stage_data\river_stage_par.csv'
 
     # Read data
     if PLOT_NORM:

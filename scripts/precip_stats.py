@@ -10,8 +10,8 @@ import datetime as dt
 
 
 def main():
-    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_15min.csv'
-    stats_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_stats_full.csv'
+    precip_path = r'Data\hydro\precip_data\precip_15min.csv'
+    stats_path = r'Data\hydro\precip_data\precip_stats_full.csv'
 
     precip_df = hutils.read_precip_data(precip_path, single_time_col=False)
     

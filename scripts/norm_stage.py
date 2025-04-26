@@ -4,8 +4,8 @@ import hydro_utils
 
 def main():
     # Data paths
-    og_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par.csv'
-    out_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par_norm.csv'
+    og_path = r'Data\hydro\stage_data\river_stage_par.csv'
+    out_path = r'Data\hydro\stage_data\river_stage_par_norm.csv'
 
     stage_df = hydro_utils.read_stage_data_og(og_path)
 

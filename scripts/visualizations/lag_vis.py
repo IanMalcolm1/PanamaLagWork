@@ -11,10 +11,10 @@ USE_NORM_STAGE = False
 
 def main():    
     # Hydro data
-    precip_path = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_15min.csv'
-    stage_path_norm = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par_norm.csv'
-    stage_path_og = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\stage_data\river_stage_par.csv'
-    lagpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\lag_data\lag_15min.csv'
+    precip_path = r'Data\hydro\precip_data\precip_15min.csv'
+    stage_path_norm = r'Data\hydro\stage_data\river_stage_par_norm.csv'
+    stage_path_og = r'Data\hydro\stage_data\river_stage_par.csv'
+    lagpath = r'Data\hydro\lag_data\lag_15min.csv'
 
     precip_df = hutils.read_precip_data(precip_path, single_time_col=False)
     lag_df = hutils.read_peaks_data(lagpath)
