@@ -7,10 +7,50 @@ import os
 
 
 def main():
-    indir = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_raw\15min'
-    outpath = r'C:\Users\ianma\OneDrive - University of Redlands\GisCapstone\Data\hydro\precip_data\precip_15min.csv'
+    indir = r''
+    outpath = r''
 
     prep_and_merge(indir, outpath, num_time_cols=2)
+
+
+def prep_singular(inpath, outpath, num_time_cols):
+    """Preps and saves a single file
+    
+    Args:
+        indir (str): The directory containing the csv files
+        outpath (str): The path to save the merged csv file
+        num_time_cols (int): The number of time columns in the csv file. Normally 2 columns unless
+            downloaded using points-as-recorded setting."""
+    melt_df = fix_cols(inpath, num_time_cols=num_time_cols)
+
+    melt_df.to_csv(outpath, index=False)
+
+
+def prep_and_merge(indir, outpath, num_time_cols):
+    """
+    Preps and combines all csv files in a directory into a single file. This is useful when the PCA website
+    can't handle a full data export, and you have to split the data into a series of smaller time periods.
+    
+    Args:
+        indir (str): The directory containing the csv files
+        outpath (str): The path to save the merged csv file
+        num_time_cols (int): The number of time columns in the csv file. Normally 2 columns unless
+            downloaded using points-as-recorded setting.
+    """
+
+    for _, _, files in os.walk(indir):
+        break
+
+    melt_dfs = []
+    for file in files:
+        if file.endswith('.csv'):
+            csv_path = os.path.join(indir, file)
+            fixed_df = fix_cols(csv_path, num_time_cols=num_time_cols)
+            melt_dfs.append(fixed_df)
+
+    concat_df = pd.concat(melt_dfs)
+
+    concat_df.to_csv(outpath, index=False)
 
 
 def fix_cols(base_path, num_time_cols=2):
@@ -50,39 +90,6 @@ def fix_cols(base_path, num_time_cols=2):
     melt_df = melt_df[melt_cols]
 
     return melt_df
-
-
-def prep_singular(inpath, outpath, num_time_cols):
-    """Preps and saves a single file"""
-    melt_df = fix_cols(inpath, num_time_cols=num_time_cols)
-
-    melt_df.to_csv(outpath, index=False)
-
-
-def prep_and_merge(indir, outpath, num_time_cols):
-    """
-    Preps and combines all csv files in a directory into a single file. This is useful when the PCA website
-    can't handle a full data export, and you have to split the data into a series of smaller time periods.
-    
-    Args:
-        indir (str): The directory containing the csv files
-        outpath (str): The path to save the merged csv file
-    """
-
-    for _, _, files in os.walk(indir):
-        break
-
-    melt_dfs = []
-    for file in files:
-        if file.endswith('.csv'):
-            csv_path = os.path.join(indir, file)
-            melt_dfs.append (fix_cols(csv_path, num_time_cols=num_time_cols))
-
-    concat_df = pd.concat(melt_dfs)
-
-    concat_df = concat_df.sort_values(by=['Station Code', 'Time'])
-
-    concat_df.to_csv(outpath, index=False)
 
 
 
